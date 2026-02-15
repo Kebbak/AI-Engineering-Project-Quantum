@@ -1,0 +1,23 @@
+# Python dependencies for AI Engineering Project Quantum
+
+# Core dependencies
+langchain
+chromadb
+openai
+streamlit
+
+# PDF/HTML/TXT/Markdown parsing
+pypdf
+beautifulsoup4
+markdown
+
+# Embedding models (example: sentence-transformers)
+sentence-transformers
+
+# Evaluation and testing
+pytest
+
+# Optional: for environment variables
+python-dotenv
+
+# Add any other dependencies as needed
