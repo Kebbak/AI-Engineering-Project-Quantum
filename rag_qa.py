@@ -1,29 +1,3 @@
-#!/usr/bin/env python3
-"""
-rag_qa.py
-
-End-to-end RAG pipeline over your ChromaDB collection:
-- Top-k retrieval from ./chroma_db, collection 'policy_chunks'
-- Optional cross-encoder re-ranking (SentenceTransformers)
-- Prompt construction with injected chunks (headers omitted by default for a cleaner prompt)
-- Guardrails:
-    * Refuse to answer outside the corpus (if rerank gate used)
-    * Limit output length
-- Quiet output:
-    * Prints ONLY the final answer text by default (no labels, no headers)
-    * Optional --show-sources to print a sources list
-    * Optional --debug to print collection listing
-
-Usage examples:
-    python3 rag_qa.py -q "What is the VPN policy for contractors?"
-    python3 rag_qa.py -q "remote work expectations" -k 5 --rerank
-    python3 rag_qa.py --interactive
-    python3 rag_qa.py --file questions.txt -k 5 --rerank --min-score 0.25
-
-Environment:
-    OPENROUTER_API_KEY=<your key>   # Required only if you want LLM generation
-"""
-
 from __future__ import annotations
 
 import argparse

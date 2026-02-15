@@ -1,21 +1,3 @@
-"""
-ingest.py
-
-Script to parse, chunk, embed, and index policy documents for a RAG application.
-
-Pipeline:
-- Reads documents from ./corpus via doc_utils.read_documents (expects [{'source': str, 'content': str}, ...])
-- Chunks documents with overlap (character-based)
-- Embeds chunks locally with SentenceTransformers (./all-MiniLM-L6-v2)
-- Persists to ChromaDB at ./chroma_db in collection 'policy_chunks'
-
-Run:
-    python3 ingest.py
-
-Notes:
-- The 'UNEXPECTED embeddings.position_ids' notice from SentenceTransformers for all-MiniLM-L6-v2 is harmless.
-- This script precomputes embeddings and stores them; no embedding function is attached to the collection to avoid conflicts during query.
-"""
 
 from __future__ import annotations
 
@@ -31,7 +13,7 @@ from doc_utils import read_documents  # must return [{'source': str, 'content': 
 # ---------------------------
 CORPUS_DIR = Path("corpus")
 CHROMA_DB_DIR = "chroma_db"             # Will be created automatically
-EMBEDDING_MODEL = "./all-MiniLM-L6-v2"  # Local directory or HF model name
+EMBEDDING_MODEL = "./all-MiniLM-L6-v2" # local SentenceTransformer model
 COLLECTION_NAME = "policy_chunks"
 CHUNK_SIZE = 300        # characters
 CHUNK_OVERLAP = 50      # characters
