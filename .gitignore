@@ -1,0 +1,85 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.dist/
+build/
+dist/
+.eggs/
+
+# Virtual envs
+venv/
+.env/
+.envrc
+.python-version
+
+# Editors/OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Local config / secrets
+*.env
+.env.local
+.env.*.local
+
+# Chroma / indexes / caches
+chroma_db/
+all-MiniLM-L6-v2/
+*.chroma/
+index/
+.faiss
+*.faiss
+
+# NLP / model directories (local models)
+models/
+model/
+*.bin
+*.pt
+*.pth
+*.onnx
+*.safetensors
+*.h5
+*.ckpt
+tokenizers/
+cache/
+.huggingface/
+transformers_cache/
+sentence_transformers/*
+
+# Data dumps / corpora / artifacts
+data/
+datasets/
+corpus/*.pdf
+corpus/*.docx
+corpus/*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.7z
+
+# Generated files
+*.pdf
+*.docx
+*.pptx
+*.xlsx
+*.db
+*.sqlite
+*.sqlite3
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Node (if any UI)
+node_modules/
+npm-debug.log*
+yarn-error.log
