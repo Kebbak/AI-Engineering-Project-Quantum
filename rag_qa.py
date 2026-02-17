@@ -159,11 +159,17 @@ def should_abstain(
     """
     if not retrieved:
         return True
+    # If rerank is enabled, use rerank score threshold
     if use_rerank_gate and (min_score is not None):
         top = retrieved[0]
         if top.rerank_score is None:
             return False  # cannot gate w/out score
         return top.rerank_score < float(min_score)
+    # If rerank is not used, use a distance threshold (lower distance = more similar)
+    DISTANCE_THRESHOLD = 1.0  # tune as needed; lower is stricter (e.g., 0.8)
+    top = retrieved[0]
+    if top.distance is not None and top.distance > DISTANCE_THRESHOLD:
+        return True
     return False
 
 
