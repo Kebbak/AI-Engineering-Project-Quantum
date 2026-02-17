@@ -45,7 +45,15 @@ def chat():
         snippets = []
         if "Sources:" in output:
             sources_section = output.split("Sources:")[-1].strip()
-            citations = [line.strip() for line in sources_section.split("\n") if line.strip() and not line.startswith("(none")]
+            # Only include citations that match known corpus file patterns
+            known_patterns = ["policy", ".md", ".txt", ".pdf", ".html", "code_of_conduct"]
+            citations = [
+                line.strip()
+                for line in sources_section.split("\n")
+                if line.strip()
+                and not line.startswith("(none")
+                and any(pat in line.strip() for pat in known_patterns)
+            ]
         return jsonify({
             "answer": answer,
             "citations": citations,

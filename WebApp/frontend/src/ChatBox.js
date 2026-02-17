@@ -45,6 +45,12 @@ function CodeBlock({ language = "text", value = "" }) {
 
 /* ---------- One message bubble (user/assistant) ---------- */
 function Message({ role, content, citations }) {
+    // Filter out single-letter or empty citations
+    const filteredCitations = (citations || []).filter(c => typeof c === 'string' && c.trim().length > 2);
+    // Debug log to inspect citations
+    if (filteredCitations.length > 0) {
+      console.log('Message citations:', filteredCitations);
+    }
   const components = {
     code({ inline, className, children, ...props }) {
       const match = /language-(\w+)/.exec(className || "");
@@ -56,12 +62,11 @@ function Message({ role, content, citations }) {
           </code>
         );
       }
-      return (
-        <CodeBlock language={match ? match[1] : "text"} value={text} />
-      );
+      return <CodeBlock language={match ? match[1] : "text"} value={text} />;
     },
   };
 
+  // ...existing code...
   return (
     <div className={`flex mb-3 ${role === "user" ? "justify-end" : "justify-start"}`}>
       <div
@@ -73,14 +78,14 @@ function Message({ role, content, citations }) {
         ].join(" ")}
       >
         <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
-{content}
+          {content}
         </ReactMarkdown>
 
-        {!!citations?.length && (
+        {!!filteredCitations.length && (
           <div className="pt-2 mt-2 border-t text-xs text-slate-500">
             <span className="font-semibold">Citations:</span>
             <ul className="list-disc ml-4 mt-1">
-              {citations.map((c, i) => (
+              {filteredCitations.map((c, i) => (
                 <li key={i}>{c}</li>
               ))}
             </ul>
@@ -91,16 +96,8 @@ function Message({ role, content, citations }) {
   );
 }
 
-/* ---------- Main ChatBox component ---------- */
+/* ---------- Main ChatBox component (with fixed footer) ---------- */
 export default function ChatBox() {
-  // const [conversations, setConversations] = useState([
-  //   { id: 1, title: "Code of Conduct", updated: "Today" },
-  //   { id: 2, title: "Holiday Policy", updated: "Today" },
-  //   { id: 3, title: "Expense Policy", updated: "Yesterday" },
-  //   { id: 4, title: "Remote Work Policy", updated: "2 days ago" },
-  //   { id: 5, title: "IT Security Policy", updated: "Last week" },
-  //   { id: 6, title: "Leave Policy", updated: "Last month" },
-  // ]);
   const [conversations, setConversations] = useState([]);
   const [activeConversation, setActiveConversation] = useState(1);
 
@@ -168,7 +165,7 @@ export default function ChatBox() {
     const userMsg = { id: Date.now(), role: "user", content: question };
     setStore(prev => ({
       ...prev,
-      [activeConversation]: [ ...(prev[activeConversation] || []), userMsg ],
+      [activeConversation]: [...(prev[activeConversation] || []), userMsg],
     }));
     setInput("");
     setLoading(true);
@@ -190,7 +187,7 @@ export default function ChatBox() {
 
       setStore(prev => ({
         ...prev,
-        [activeConversation]: [ ...(prev[activeConversation] || []), botMsg ],
+        [activeConversation]: [...(prev[activeConversation] || []), botMsg],
       }));
     } catch (err) {
       setStore(prev => ({
@@ -214,7 +211,8 @@ export default function ChatBox() {
 
   return (
     <div className="h-screen w-full bg-gray-50 text-slate-900">
-      <div className="grid grid-cols-[280px,1fr] h-full">
+      {/* Ensure grid can shrink/scroll */}
+      <div className="grid grid-cols-[280px,1fr] h-full min-h-0">
         {/* Sidebar */}
         <aside className="bg-white border-r">
           <div className="flex items-center justify-between px-4 h-14 border-b">
@@ -251,7 +249,7 @@ export default function ChatBox() {
         </aside>
 
         {/* Main area */}
-        <main className="grid grid-rows-[56px,1fr,auto]">
+        <main className="grid grid-rows-[56px,1fr] min-h-0">
           {/* Top bar */}
           <div className="h-14 bg-white border-b flex items-center justify-between px-3">
             <div className="font-semibold">Message Chatbox</div>
@@ -262,10 +260,10 @@ export default function ChatBox() {
             </div>
           </div>
 
-          {/* Messages */}
+          {/* Messages (only this scrolls). Add bottom padding to clear the fixed footer */}
           <div
             ref={scroller}
-            className="overflow-y-auto p-3 sm:p-4 bg-gradient-to-b from-blue-50/40 via-transparent to-transparent"
+            className="overflow-y-auto min-h-0 p-3 sm:p-4 pb-[96px] bg-gradient-to-b from-blue-50/40 via-transparent to-transparent"
           >
             <div className="max-w-3xl mx-auto">
               {messages.length === 0 && (
@@ -282,8 +280,11 @@ export default function ChatBox() {
             </div>
           </div>
 
-          {/* Input */}
-          <form onSubmit={handleSend} className="bg-white border-t">
+          {/* Fixed footer input */}
+          <form
+            onSubmit={handleSend}
+            className="fixed inset-x-0 bottom-0 bg-white border-t z-20 [padding-bottom:env(safe-area-inset-bottom)]"
+          >
             <div className="max-w-3xl mx-auto p-3 sm:p-4">
               <div className="flex items-center gap-2">
                 <div className="flex-1 flex items-center gap-2 border rounded-2xl px-2 bg-white">
