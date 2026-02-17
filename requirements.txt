@@ -1,6 +1,9 @@
 # Python dependencies for AI Engineering Project Quantum
 
+
 # Core dependencies
+flask
+flask-cors
 langchain
 chromadb
 openai
