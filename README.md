@@ -21,8 +21,7 @@ Welcome to the AI Engineering Project Quantum! This project aims to explore and 
 2. **Create and activate the virtual environment:**
    ```sh
    python3 -m venv venv
-   source venv/bin/activate  # On Linux/Mac
-   # .\venv\Scripts\activate  # On Windows
+   source venv/bin/activate  # On Linux
    ```
 3. **Install dependencies:**
    ```sh
@@ -32,10 +31,6 @@ Welcome to the AI Engineering Project Quantum! This project aims to explore and 
    ```sh
    # Add run instructions here (e.g., streamlit run app.py)
    ```
-
-## Contributing
-
-Contributions are welcome! Please open issues or submit pull requests for improvements.
 
 ## License
 
