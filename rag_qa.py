@@ -20,7 +20,7 @@ except Exception:
 import requests
 
 # ---------------------------
-# Configuration (aligns with your ingest/query)
+# Configuration with ingestion
 # ---------------------------
 CHROMA_DB_DIR = "chroma_db"
 COLLECTION_NAME = "policy_chunks"
