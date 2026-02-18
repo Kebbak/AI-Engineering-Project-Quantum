@@ -1,3 +1,4 @@
+# This script creates a PDF document containing the workplace safety policy.
 from fpdf import FPDF
 
 pdf = FPDF()
