@@ -6,7 +6,7 @@ from typing import List, Dict, Any
 import math
 import chromadb
 from sentence_transformers import SentenceTransformer
-from doc_utils import read_documents  # must return [{'source': str, 'content': str}, ...]
+from doc_utils import read_documents 
 
 # ---------------------------
 # Config
@@ -57,7 +57,7 @@ def embed_chunks_local(chunks: List[str], model_path: str, batch_size: int = 512
         return []
     model = SentenceTransformer(model_path)
 
-    # SentenceTransformer handles batching internally if we pass batch_size
+    # SentenceTransformer handles batching internally if batch_size pass
     vectors = model.encode(
         chunks,
         show_progress_bar=True,
@@ -126,7 +126,7 @@ def main() -> None:
     client = chromadb.PersistentClient(path=CHROMA_DB_DIR)
     collection = client.get_or_create_collection(name=COLLECTION_NAME)
 
-    # For very large datasets you could chunk adds; for 20 items this is fine:
+    # For very large datasets chunk adds can be used; for 20 items this is fine:
     collection.add(
         ids=ids,
         documents=all_chunks,

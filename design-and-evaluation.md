@@ -46,6 +46,3 @@
 - Metrics: Groundedness, Citation Accuracy, Latency (p50/p95).
 - See README for setup and run instructions.
 
----
-
-*This document justifies the main design and architecture decisions for the RAG LLM-based company policy QA system.*
