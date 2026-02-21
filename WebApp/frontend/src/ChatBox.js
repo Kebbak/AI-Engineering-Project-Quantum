@@ -252,7 +252,7 @@ export default function ChatBox() {
         <main className="grid grid-rows-[56px,1fr] min-h-0">
           {/* Top bar */}
           <div className="h-14 bg-white border-b flex items-center justify-between px-3">
-            <div className="font-semibold">Message Chatbox</div>
+            <div className="font-semibold">Message Chatbot</div>
             <div className="flex items-center gap-2">
               <button className="inline-flex items-center gap-2 px-2 py-1 rounded-md border" onClick={newChat}>
                 <FiRefreshCw /> Reset
@@ -292,7 +292,7 @@ export default function ChatBox() {
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder="Message Chatbox"
+                    placeholder="Message Chatbot"
                     className="flex-1 px-2 py-3 rounded-2xl outline-none"
                     disabled={loading}
                   />
